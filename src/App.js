@@ -1,18 +1,41 @@
 import React, {useState, useEffect} from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Home from './routes/Home'
+import Search from './routes/SearchRecipes';
+import Profile from './routes/Profile';
+import NotFoundPage from './routes/ErrorPage';
 //import logo from './logo.svg';
 import './App.css';
 
 const App = () => {
+  const routes = [
+    {'path':'/', 'name':'Home'},
+    {'path':'/search', 'name':'Search'},
+    {'path':'/profile', 'name':'Profile'}
+  ];
+
+
   return (
     <div className="App">
-      <div>
-        {'---Nav Component with routes---'}<br/>
-        {'Add media queries to make it appear on side for mobile'}
+      <div id="navbar" className="navbar">
+        <a href="/" className="navbar-brand">The Cookbook</a>
+        <div>
+          <ul className="list-items">
+              <li><a href="/search">Recipes</a></li>
+              <li><a href="/profile">Profile</a></li>
+          </ul>
+        </div>
       </div>
-
-      <div>
-        <p>{'Blurb on site!'}</p>
-        <p>{'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}</p>
+      <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/search" component={Search} />
+          <Route path="/profile" component={Profile} />
+          <Route component={NotFoundPage} />
+      </Switch>
+      <div id="footer" className="footer">
+        {'----Footer component----'}<br/>
+        {'Not sure what to put here yet'}<br/>
+        {'Contact my info?'}
       </div>
     </div>
   );
