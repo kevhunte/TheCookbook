@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Profile = () => {
+  // check if authenticated. Return auth or unauth version of webpage
   return (
     <div id="profilePage" className="profile page">
       <p>{'Profile page for users'}</p>

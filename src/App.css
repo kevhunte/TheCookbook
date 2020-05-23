@@ -9,7 +9,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: #343a40 !important;
+  background-color: #B38A0B !important;
   display: flex;
   align-items: center;
   padding: .75rem 1rem;
@@ -26,6 +26,11 @@
       color: white;
 }
 
+.navbarPicture {
+  max-width: 2.5rem;
+  padding-right: 0.5rem;
+}
+
 .list-items{
   display: flex;
   flex-direction: row;
@@ -40,44 +45,10 @@ a{
 }
 
 li>a{
-  color: hsla(0,0%,100%,.5);
+  color: hsla(46, 5%, 97%,.8);
   padding: .5rem 1rem;
 }
 
 .page{
   padding-top: 50px;
 }
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
