@@ -53,3 +53,95 @@ li>a{
 .page{
   padding-top: 50px;
 }
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@media (print),
+(prefers-reduced-motion: reduce) {
+  .animated {
+    -webkit-animation-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    -webkit-transition-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@-webkit-keyframes backInRight {
+  0% {
+    -webkit-transform: translateX(2000px);
+    transform: translateX(2000px);
+    opacity: 0.7;
+  }
+
+  80% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    opacity: 0.7;
+  }
+
+  100% {
+    /* -webkit-transform: scale(1);
+    transform: scale(1); */
+    opacity: 1;
+  }
+}
+@keyframes backInRight {
+  0% {
+    -webkit-transform: translateX(2000px);
+    transform: translateX(2000px);
+    opacity: 0.7;
+  }
+
+  80% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    opacity: 0.7;
+  }
+
+  100% {
+    /* -webkit-transform: scale(1);
+    transform: scale(1); */
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  /*Mobile only settings*/
+  #home, #profilePage, #search{
+    -webkit-animation-name: backInRight;
+    animation-name: backInRight;
+  }
+}
+
+@media (min-width: 480px) {
+  /*Webpage only settings*/
+  #home, #profilePage, #search{
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
+}

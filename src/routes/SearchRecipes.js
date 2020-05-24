@@ -2,7 +2,7 @@ import React from 'react';
 
 const Search = () => {
   return (
-    <div id="search" className="search page">
+    <div id="search" className="search page animated">
       <p>{'Search page for looking up recipes'}</p>
       <p>{'Search bar here, and other parameters'}</p>
       <p>{'Build infinite scroll for this page after search. Increment page by date of recipe being added'}</p>

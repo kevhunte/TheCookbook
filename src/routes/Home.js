@@ -3,7 +3,7 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div id="home" className="home page">
+    <div id="home" className="home page animated">
       <div>
         <p>{'Homepage for site!'}</p>
         <p>{'What the site is and what it is for'}</p>
