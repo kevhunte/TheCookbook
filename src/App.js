@@ -10,8 +10,6 @@ import './App.css';
 const App = () => {
 // handle auth for router here. Can pass auth value to components for conditional rendering
 
-// localStorage options?
-
   return (
     <div className="App">
       <NavBar/>

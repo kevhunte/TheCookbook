@@ -42,6 +42,7 @@
 a{
   text-decoration: none;
   background-color: transparent;
+  color: inherit;
 }
 
 li>a{
