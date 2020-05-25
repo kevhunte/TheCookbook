@@ -8,23 +8,22 @@ const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
-    <div>
       <div id="navbar" className="navbar">
        <img className="navbarPicture" src="/favicon.png" alt="navbar icon"/>
         <Link to="/" className="navbar-brand">The Cookbook</Link>
-        <div>
-          <ul className="list-items">
+        <div style={{display:'flex', flexGrow:'1'}}>
+          <ul className="list-items" style={{marginLeft:'0'}}>
               <li><Link to="/search">Recipes</Link></li>
               <li><Link to="/profile">Profile</Link></li>
-              {!isAuthenticated && (
-            <li><button onClick={() => loginWithRedirect({})}>Log in</button></li>
-          )}
-
-          {isAuthenticated && <li><button onClick={() => logout()}>Log out</button></li>}
+          </ul>
+          <ul className="list-items" style={{marginRight:'0'}}>
+          {/* eslint-disable-next-line*/}
+          {!isAuthenticated && (<li><a href="#" onClick={() => loginWithRedirect({})}>Log&nbsp;in</a></li>)}
+          {/* eslint-disable-next-line*/}
+          {isAuthenticated && <li><a href="#" onClick={() => logout()}>Log&nbsp;out</a></li>}
           </ul>
         </div>
       </div>
-    </div>
   );
 }
 

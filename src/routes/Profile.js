@@ -5,7 +5,7 @@ const Profile = () => {
   // check if authenticated. Return auth or unauth version of webpage
   const { loading, user } = useAuth0();
 
-  if (loading || !user) {
+  if (!user) { //if (loading || !user) {
     return (
       <div id="profilePage" className="profile page animated">
         <p>Unauth page component</p>
