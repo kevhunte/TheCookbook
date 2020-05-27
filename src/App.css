@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: wheat;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 }
 
 .navbar{
@@ -53,6 +53,7 @@ li>a{
 }
 
 .page{
+  padding: 0 2rem;
   padding-top: 50px;
 }
 
@@ -138,6 +139,14 @@ li>a{
     -webkit-animation-name: backInRight;
     animation-name: backInRight;
   }
+
+  .topRecipes{
+    background-color: #FDFAF0;
+    border-radius: 14px;
+    max-height: 300px;
+    padding: 0 0.5rem 0.25rem 0.5rem;
+    overflow-y: auto;
+  }
 }
 
 @media (min-width: 480px) {
@@ -145,5 +154,22 @@ li>a{
   #home, #profilePage, #search{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
+  }
+
+  .topRecipes{
+    margin: 0;
+    padding: 0;
+    right: 0;
+    width: 200px;
+    background-color: #FDFAF0;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+  }
+  .home{
+    /* padding-right: 0; */
+  }
+  .homeContent{
+    padding-right: 200px;
   }
 }
