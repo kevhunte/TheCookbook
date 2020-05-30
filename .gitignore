@@ -13,6 +13,7 @@
 
 #secrets
 auth_config.json
+endpoints.json
 
 # misc
 .DS_Store

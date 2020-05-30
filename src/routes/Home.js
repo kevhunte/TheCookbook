@@ -1,24 +1,56 @@
-import React from 'react';
-
+import React, {useState, useEffect} from 'react';
+import endpoints from "../endpoints.json";
 
 const Home = () => {
-  // call endpoint for most recent recipes
+  const [latestRecipes,setlatestRecipes] = useState([]);
+
+  const fetchLatestRecipes = async (endpoint, token) => {
+    try{
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      console.log(data.recipes);
+      if(data.response === 200){
+        setlatestRecipes(data.recipes);
+      }
+    }
+    catch(e){
+      console.error('error calling endpoint:',e);
+    }
+    finally {
+      return null;
+    }
+
+  }
+
+  useEffect(() => {
+    //no querystrings. Default behavior for endpoint
+    fetchLatestRecipes(endpoints.recipesEndpoint);
+
+
+  },[]);
+
   return (
     <div id="home" className="home page animated">
       <br/>
         <div className="topRecipes">
-          <p>{'Side component for most saved recipes? API call on mount'}</p>
           <p> Pull this into its own component when it is time </p>
           <p> And make all of these elements interactive. </p>
           <p> Populate recipe body on click and navigate to that route </p>
-          <p> Top Recipe 1</p>
-          <p> Top Recipe 2</p>
-          <p> Top Recipe 3</p>
-          <p> Top Recipe 4</p>
-          <p> Top Recipe 5</p>
-          <p> Top Recipe 6</p>
-          <p> Top Recipe 7</p>
-          <p> Top Recipe 8</p>
+          {latestRecipes && latestRecipes.map((r) =>
+            <div key={r.id} className="">
+              <p key={r.name}>
+                {r.name}
+              </p>
+              <p style={{display: r.anonymous ? 'none' : undefined}} key={r.uploadedBy}>
+                by {r.uploadedBy}
+              </p>
+              <div key={r.ratings}>
+                <p>{r.ratings.love}</p>
+                <p>{r.ratings.good}</p>
+                <p>{r.ratings.bad}</p>
+              </div>
+            </div>
+          )}
         </div>
         <div className="homeContent">
         <p>{'Homepage for site!'}</p>
