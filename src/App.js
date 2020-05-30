@@ -10,7 +10,7 @@ import NavBar from './components/navbar';
 import './App.css';
 
 const App = () => {
-// handle auth for router here. Can pass auth value to components for conditional rendering
+  // control state of recipe here. Accessible from all routes
 
 const { loading } = useAuth0();
 

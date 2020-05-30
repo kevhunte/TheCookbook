@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import endpoints from "../endpoints.json";
+import heartLogo from "../assets/heart.png";
+import sadLogo from "../assets/sad.png";
 
 const Home = () => {
   const [latestRecipes,setlatestRecipes] = useState([]);
@@ -32,26 +34,7 @@ const Home = () => {
   return (
     <div id="home" className="home page animated">
       <br/>
-        <div className="topRecipes">
-          <p> Pull this into its own component when it is time </p>
-          <p> And make all of these elements interactive. </p>
-          <p> Populate recipe body on click and navigate to that route </p>
-          {latestRecipes && latestRecipes.map((r) =>
-            <div key={r.id} className="">
-              <p key={r.name}>
-                {r.name}
-              </p>
-              <p style={{display: r.anonymous ? 'none' : undefined}} key={r.uploadedBy}>
-                by {r.uploadedBy}
-              </p>
-              <div key={r.ratings}>
-                <p>{r.ratings.love}</p>
-                <p>{r.ratings.good}</p>
-                <p>{r.ratings.bad}</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <TopRecipes latestRecipes={latestRecipes}/>
         <div className="homeContent">
         <p>{'Homepage for site!'}</p>
         <p>{'What the site is and what it is for'}</p>
@@ -70,5 +53,33 @@ const Home = () => {
   );
 }
 
+function TopRecipes({latestRecipes}){
+// on click, head to the recipe route and set state to that recipe
+  return(
+    <div className="topRecipes">
+      <p> Latest recipes added to The Cookbook </p>
+      <p> Populate recipe body on click and navigate to that route </p>
+      {latestRecipes && latestRecipes.map((r, index) =>
+        <div key={r.id} className="topRecipe">
+          <p key={r.name} style={{fontVariant: 'all-petite-caps'}}>
+            {r.name}
+          </p>
+          <p key={r.uploadedBy}>
+            by {r.anonymous ? 'Anonymous' : r.uploadedBy}
+          </p>
+          <div key={r.ratings} className="topRecipeSubContent">
+
+            <span style={{display: r.ratings.love ? undefined : 'none', margin:'0.1rem 0.3rem'}}>{r.ratings.love} <img src={heartLogo} style={{width:'1rem'}} alt=""/></span>
+
+            <span style={{display: r.ratings.bad ? undefined : 'none'}}>{r.ratings.bad} <img src={sadLogo} style={{width:'1rem'}} alt=""/></span>
+            <div key={index^2} className="">
+              <button key={index} onClick={() => console.log('set my state to r and reroute')}>{'View this recipe > '}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default Home;

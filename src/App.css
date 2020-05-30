@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .App {
   text-align: center;
   background-color: wheat;
@@ -55,6 +59,24 @@ li>a{
 .page{
   padding: 0 2rem;
   padding-top: 50px;
+}
+
+.topRecipe{
+  max-height: 50px;
+  margin: 0 0 0.1rem 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 1px 2px 10px #888888;
+}
+
+.topRecipe:hover {
+  overflow: visible;
+  max-height: 200px;
+  padding: 0.5em 0;
+  transition: 0.2s ease-in;
+}
+
+.topRecipeSubContent{
 }
 
 .animated {
@@ -117,7 +139,7 @@ li>a{
 
 @-webkit-keyframes fadeIn {
   from {
-    opacity: 0
+    opacity: 0;
   }
   to {
     opacity: 1;
@@ -126,7 +148,7 @@ li>a{
 
 @keyframes fadeIn {
   from {
-    opacity: 0
+    opacity: 0;
   }
   to {
     opacity: 1;

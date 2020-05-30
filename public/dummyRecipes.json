@@ -20,7 +20,6 @@
       "saves": 1,
       "ratings": {
         "bad":0,
-        "good":4,
         "love":3
       }
     },
@@ -47,7 +46,6 @@
       "saves": 12,
       "ratings": {
         "bad":0,
-        "good":3,
         "love":1
       }
     },
@@ -74,7 +72,6 @@
       "saves": 3,
       "ratings": {
         "bad":2,
-        "good":4,
         "love":6
       }
     },
@@ -109,8 +106,7 @@
       "saves": 7,
       "ratings": {
         "bad":3,
-        "good":15,
-        "love":5
+        "love":0
       }
     }
   ]
