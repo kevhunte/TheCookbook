@@ -2,6 +2,7 @@ import React from 'react';
 
 
 const Home = () => {
+  // call endpoint for most recent recipes
   return (
     <div id="home" className="home page animated">
       <br/>
