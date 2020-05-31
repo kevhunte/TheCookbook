@@ -157,7 +157,7 @@ li>a{
 
 @media (max-width: 480px) {
   /*Mobile only settings*/
-  #home, #profilePage, #search{
+  #home, #profilePage, #search, #recipePage{
     -webkit-animation-name: backInRight;
     animation-name: backInRight;
   }
@@ -173,7 +173,7 @@ li>a{
 
 @media (min-width: 480px) {
   /*Webpage only settings*/
-  #home, #profilePage, #search{
+  #home, #profilePage, #search, #recipePage{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
   }

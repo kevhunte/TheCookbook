@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory } from "react-router-dom";
 import endpoints from "../endpoints.json";
 import heartLogo from "../assets/heart.png";
 import sadLogo from "../assets/sad.png";
@@ -55,6 +56,16 @@ const Home = () => {
 
 function TopRecipes({latestRecipes}){
 // on click, head to the recipe route and set state to that recipe
+  const history = useHistory();
+
+  const toRecipePage = (recipe) => {
+    if(recipe){
+      // set state
+      history.push("/recipe");
+    }
+
+  }
+
   return(
     <div className="topRecipes">
       <p> Latest recipes added to The Cookbook </p>
@@ -64,16 +75,17 @@ function TopRecipes({latestRecipes}){
           <p key={r.name} style={{fontVariant: 'all-petite-caps'}}>
             {r.name}
           </p>
-          <p key={r.uploadedBy}>
+          <p key={r.uploadedBy} style={{fontFamily:'monospace'}}>
             by {r.anonymous ? 'Anonymous' : r.uploadedBy}
           </p>
           <div key={r.ratings} className="topRecipeSubContent">
 
-            <span style={{display: r.ratings.love ? undefined : 'none', margin:'0.1rem 0.3rem'}}>{r.ratings.love} <img src={heartLogo} style={{width:'1rem'}} alt=""/></span>
+              <span style={{display: r.ratings.love ? undefined : 'none', margin:'0.1rem 0.3rem'}}>{r.ratings.love} <img src={heartLogo} style={{width:'1rem'}} alt=""/></span>
 
-            <span style={{display: r.ratings.bad ? undefined : 'none'}}>{r.ratings.bad} <img src={sadLogo} style={{width:'1rem'}} alt=""/></span>
+              <span style={{display: r.ratings.bad ? undefined : 'none'}}>{r.ratings.bad} <img src={sadLogo} style={{width:'1rem'}} alt=""/></span>
+
             <div key={index^2} className="">
-              <button key={index} onClick={() => console.log('set my state to r and reroute')}>{'View this recipe > '}</button>
+              <button key={index} onClick={() => toRecipePage(r)} style={{padding:'0.5rem 1rem', borderRadius:'25px',background:'wheat',fontWeight:'550', border:'none'}}>{'View this recipe > '}</button>
             </div>
           </div>
         </div>

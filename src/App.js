@@ -5,6 +5,7 @@ import history from "./utils/history";
 import Home from './routes/Home'
 import Search from './routes/SearchRecipes';
 import Profile from './routes/Profile';
+import Recipe from './routes/Recipe';
 import NotFoundPage from './routes/ErrorPage';
 import NavBar from './components/navbar';
 import './App.css';
@@ -28,6 +29,7 @@ const { loading } = useAuth0();
             <Route path="/" component={Home} exact />
             <Route path="/search" component={Search} />
             <Route path="/profile" component={Profile} />
+            <Route path="/recipe" component={Recipe} />
             <Route component={NotFoundPage} />
         </Switch>
         <div id="footer" className="footer">
