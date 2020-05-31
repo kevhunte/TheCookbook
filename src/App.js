@@ -60,7 +60,7 @@ const RecipeProvider = ({children}) => {
       recipe,
       setRecipeState
     }}>
-    // {children}
+    {children}
     </RecipeContext.Provider>
   );
 };

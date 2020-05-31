@@ -2,9 +2,24 @@ import React, {useEffect, useState} from 'react';
 import { useRecipeState } from "../App.js";
 
 const Recipe = () => {
-  let {recipe}  = useRecipeState();
-  // If not in context, check localStorage. If not there, check in query string and call API
-  //If not there either, display generic page.
+
+  let {recipe} = useRecipeState(); // checks context (from another age)
+
+  if(Object.keys(recipe).length === 0 && recipe.constructor === Object) {
+
+    if(window.location.search.includes("id=")) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      // send to recipes endpoint with id as query string. Set recipe on response
+      recipe = {}
+      // return a 404 component here if the API call is unsuccessful
+    }
+    else{
+      // if no context, or id, render from localStorage
+      recipe = JSON.parse(localStorage.getItem('lastRenderedRecipe')) || {};
+    }
+  }
+  //If not there either, Default
 
   return (
     <div id="recipePage" className="recipePage page animated">
@@ -17,14 +32,26 @@ const Recipe = () => {
 
 
 function RecipeComponent ({recipe}) {
-    // checks if recipe is set
+
+    localStorage.setItem('lastRenderedRecipe', JSON.stringify(recipe)); // caches what is rendered for later
+
     return (
-      <div style={{display: recipe ? undefined : 'none'}}>
+      <div className="">
         <p>{recipe.name}</p>
+        <p style={{display: recipe.anonymous ? 'none' : undefined}}>Uploaded by {recipe.uploadedBy}</p>
         <p>{recipe.ratings.love}</p>
         <p>{recipe.ratings.bad}</p>
         <p>{recipe.saves}</p>
-        <p style={{display: recipe.anonymous ? 'none' : undefined}}>Uploaded by {recipe.uploadedBy}</p>
+        <div>
+        <h3>Ingredients</h3>
+          {recipe.ingredients.map((i,index) =>
+            <div key={index}>
+              <p key={i.name}>{i.name}</p>
+              <p key={i.quantity}>{i.quantity}</p>
+            </div>
+          )}
+        </div>
+
       </div>
     );
 }
