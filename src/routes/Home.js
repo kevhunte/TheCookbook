@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
+import { useRecipeState } from "../App.js";
 import endpoints from "../endpoints.json";
 import heartLogo from "../assets/heart.png";
 import sadLogo from "../assets/sad.png";
@@ -11,7 +12,7 @@ const Home = () => {
     try{
       const response = await fetch(endpoint);
       const data = await response.json();
-      console.log(data.recipes);
+      //console.log(data.recipes);
       if(data.response === 200){
         setlatestRecipes(data.recipes);
       }
@@ -57,10 +58,12 @@ const Home = () => {
 function TopRecipes({latestRecipes}){
 // on click, head to the recipe route and set state to that recipe
   const history = useHistory();
+  const { setRecipeState } = useRecipeState();
 
   const toRecipePage = (recipe) => {
     if(recipe){
-      // set state
+      //console.log('sending ',recipe);
+      setRecipeState(recipe);
       history.push("/recipe");
     }
 

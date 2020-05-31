@@ -13,7 +13,7 @@ const NavBar = () => {
         <Link to="/" className="navbar-brand">The Cookbook</Link>
         <div style={{display:'flex', flexGrow:'1'}}>
           <ul className="list-items" style={{marginLeft:'0'}}>
-              <li><Link to="/search">Recipes</Link></li>
+              <li><Link to="/search">Search</Link></li>
               <li><Link to="/profile">Profile</Link></li>
           </ul>
           <ul className="list-items" style={{marginRight:'0'}}>
