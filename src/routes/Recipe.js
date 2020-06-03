@@ -1,9 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import { useRecipeState } from "../App.js";
+import { useAuth0 } from "../react-auth0-spa";
+import '../Recipe.css';
+import heartLogo from "../assets/heart.png";
+import sadLogo from "../assets/sad.png";
+import saveLogo from "../assets/cookbook.png";
 
 const Recipe = () => {
 
   let {recipe} = useRecipeState(); // checks context (from another age)
+  const { user } = useAuth0();
 
   if(Object.keys(recipe).length === 0 && recipe.constructor === Object) {
 
@@ -24,32 +30,48 @@ const Recipe = () => {
   return (
     <div id="recipePage" className="recipePage page animated">
 
-      {Object.keys(recipe).length !== 0 && recipe.constructor === Object ? <RecipeComponent recipe={recipe}/> : <DefaultComponent/>}
+      {Object.keys(recipe).length !== 0 && recipe.constructor === Object ? <RecipeComponent recipe={recipe} user={user}/> : <DefaultComponent/>}
 
     </div>
   );
 }
 
 
-function RecipeComponent ({recipe}) {
+function RecipeComponent ({recipe, user}) {
 
     localStorage.setItem('lastRenderedRecipe', JSON.stringify(recipe)); // caches what is rendered for later
 
+    const updateRecipe = (id, change) => {
+      console.log('update '+id+' with '+change+' patch request.');
+      console.log('then add this change to'+user.name+' account. Only auth can vote!');
+    }
+
     return (
-      <div className="">
-        <p>{recipe.name}</p>
-        <p style={{display: recipe.anonymous ? 'none' : undefined}}>Uploaded by {recipe.uploadedBy}</p>
-        <p>{recipe.ratings.love}</p>
-        <p>{recipe.ratings.bad}</p>
-        <p>{recipe.saves}</p>
-        <div>
-        <h3>Ingredients</h3>
-          {recipe.ingredients.map((i,index) =>
-            <div key={index}>
-              <p key={i.name}>{i.name}</p>
-              <p key={i.quantity}>{i.quantity}</p>
-            </div>
-          )}
+      <div className="recipeContainer">
+        <h2 style={{fontVariant:'petite-caps', marginBottom:'0'}}>{recipe.name}</h2>
+        <p style={{display: recipe.anonymous ? 'none' : undefined, marginTop:'0', fontSize:'12px', color:'#73716C'}}>Uploaded by {recipe.uploadedBy}</p>
+        <div className="ratingsContainer">
+          <button onClick={() => user&&updateRecipe(recipe.id,'love')} style={{display: recipe.ratings.love ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.ratings.love} <img src={heartLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+          <button onClick={() => user&&updateRecipe(recipe.id,'bad')} style={{display: recipe.ratings.bad ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.ratings.bad} <img src={sadLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+          <button onClick={() => user&&updateRecipe(recipe.id,'save')} style={{display: recipe.saves ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.saves} <img src={saveLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+        </div>
+        <div className="">
+          <h3 style={{display: recipe.ingredients ? undefined : 'none', fontVariant:'petite-caps'}}>Ingredients</h3>
+            {recipe.ingredients.map((i,index) =>
+              <div key={index} className="ingredientContainer">
+                <p key={i.name}>{i.name}, {i.quantity}</p>
+              </div>
+            )}
+        </div>
+        <div className="">
+          <h3 style={{display: recipe.ingredients ? undefined : 'none', fontVariant:'petite-caps'}}>Instructions</h3>
+            {
+            //   recipe.ingredients.map((i,index) =>
+            //   <div key={index} className="ingredientContainer">
+            //     <p key={i.name}>{i.name}, {i.quantity}</p>
+            //   </div>
+            // )
+          }
         </div>
 
       </div>
