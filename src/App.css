@@ -157,7 +157,7 @@ li>a{
 
 @media (max-width: 480px) {
   /*Mobile only settings*/
-  #home, #profilePage, #search, #recipePage{
+  #home, #profilePage, #search, #recipePage, #newRecipe{
     -webkit-animation-name: backInRight;
     animation-name: backInRight;
   }
@@ -169,11 +169,23 @@ li>a{
     padding: 0 0.5rem 0.25rem 0.5rem;
     overflow-y: auto;
   }
+
+  #toNewRecipePage{
+    position: fixed;
+      bottom: 3rem;
+      right: 3rem;
+      padding: 8px 12px;
+      font-size: xxx-large;
+      color: white;
+      background: #B38A0B !important;
+      border: none;
+      border-radius: 50%;
+  }
 }
 
 @media (min-width: 480px) {
   /*Webpage only settings*/
-  #home, #profilePage, #search, #recipePage{
+  #home, #profilePage, #search, #recipePage, #newRecipe{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
   }
@@ -193,5 +205,17 @@ li>a{
   }
   .homeContent{
     padding-right: 200px;
+  }
+
+  #toNewRecipePage{
+    position: fixed;
+      bottom: 3rem;
+      right: 3rem;
+      padding: 0px 12px;
+      font-size: xxx-large;
+      color: white;
+      background: #B38A0B !important;
+      border: none;
+      border-radius: 50%;
   }
 }

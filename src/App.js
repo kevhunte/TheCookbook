@@ -14,15 +14,20 @@ const Home = React.lazy(() => import('./routes/Home'));
 const Search = React.lazy(() => import('./routes/SearchRecipes'));
 const Profile = React.lazy(() => import('./routes/Profile'));
 const Recipe = React.lazy(() => import('./routes/Recipe'));
+const NewRecipe = React.lazy(() => import('./routes/NewRecipe'));
 
 const App = () => {
 
-const { loading } = useAuth0();
+const { loading, user } = useAuth0();
 
   if (loading) {
     return (
       <Loading/>
     );
+  }
+  const toNewRecipes = () => {
+    console.log('takes auth users to recipe page');
+    history.push("/new");
   }
 
   return (
@@ -36,10 +41,12 @@ const { loading } = useAuth0();
                 <Route path="/search" component={Search} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/recipe" component={Recipe} />
+                <Route path="/new" component={NewRecipe} />
                 <Route component={NotFoundPage} />
             </Switch>
           </Suspense>
         </RecipeProvider>
+        <button id="toNewRecipePage" onClick={() => user&&toNewRecipes()} style={{display: user ? undefined : 'none'}}>+</button>
         <div id="footer" className="footer">
           {'----Footer component----'}<br/>
           {'Not sure what to put here yet'}<br/>
