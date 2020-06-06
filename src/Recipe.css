@@ -10,3 +10,17 @@
 .ingredientContainer{
 
 }
+
+.instructionContainer{}
+
+  @media (min-width: 480px) {
+    /*Webpage views*/
+    .instructionContainer{
+      margin: 0 8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /*Mobile views*/
+
+  }

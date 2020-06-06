@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {} from 'react';
 import { useRecipeState } from "../App.js";
 import { useAuth0 } from "../react-auth0-spa";
 import '../Recipe.css';
@@ -51,26 +51,29 @@ function RecipeComponent ({recipe, user}) {
         <h2 style={{fontVariant:'petite-caps', marginBottom:'0'}}>{recipe.name}</h2>
         <p style={{display: recipe.anonymous ? 'none' : undefined, marginTop:'0', fontSize:'12px', color:'#73716C'}}>Uploaded by {recipe.uploadedBy}</p>
         <div className="ratingsContainer">
-          <button onClick={() => user&&updateRecipe(recipe.id,'love')} style={{display: recipe.ratings.love ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.ratings.love} <img src={heartLogo} alt="" style={{maxHeight: '1rem'}}/></button>
-          <button onClick={() => user&&updateRecipe(recipe.id,'bad')} style={{display: recipe.ratings.bad ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.ratings.bad} <img src={sadLogo} alt="" style={{maxHeight: '1rem'}}/></button>
-          <button onClick={() => user&&updateRecipe(recipe.id,'save')} style={{display: recipe.saves ? undefined : 'none', margin:'0 0.5rem', border: 'none', background: 'transparent'}}>{recipe.saves} <img src={saveLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+          <button onClick={() => user&&updateRecipe(recipe.id,'love')} style={{margin:'0 0.25rem', border: 'none', background: 'transparent'}}>
+          {recipe.ratings.love} <img src={heartLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+          <button onClick={() => user&&updateRecipe(recipe.id,'bad')} style={{margin:'0 0.25rem', border: 'none', background: 'transparent'}}>
+          {recipe.ratings.bad} <img src={sadLogo} alt="" style={{maxHeight: '1rem'}}/></button>
+          <button onClick={() => user&&updateRecipe(recipe.id,'save')} style={{margin:'0 0.25rem', border: 'none', background: 'transparent'}}>
+          {recipe.saves} <img src={saveLogo} alt="" style={{maxHeight: '1rem'}}/></button>
         </div>
         <div className="">
-          <h3 style={{display: recipe.ingredients ? undefined : 'none', fontVariant:'petite-caps'}}>Ingredients</h3>
-            {recipe.ingredients.map((i,index) =>
+          <h3 style={{fontVariant:'petite-caps'}}>Ingredients</h3>
+            {recipe.ingredients.sort((a,b) => a.optional && !b.optional ? 1 : -1 ).map((i,index) =>
               <div key={index} className="ingredientContainer">
-                <p key={i.name}>{i.name}, {i.quantity}</p>
+                <p key={i.name}>{i.name}, {i.quantity} {i.optional ? '(optional)' : ''}</p>
               </div>
             )}
         </div>
-        <div className="">
-          <h3 style={{display: recipe.ingredients ? undefined : 'none', fontVariant:'petite-caps'}}>Instructions</h3>
+        <div className="instructionContainer">
+          <h3 style={{fontVariant:'petite-caps'}}>Instructions</h3>
             {
-            //   recipe.ingredients.map((i,index) =>
-            //   <div key={index} className="ingredientContainer">
-            //     <p key={i.name}>{i.name}, {i.quantity}</p>
-            //   </div>
-            // )
+              recipe.instructions.map((i,index) =>
+              <div key={index} className="">
+                <p key={i.desc}>{i.desc}</p>
+              </div>
+            )
           }
         </div>
 
@@ -79,7 +82,6 @@ function RecipeComponent ({recipe, user}) {
 }
 
 function DefaultComponent () {
-  // default recipe component
   return (
     <div>
       <p>It looks like you haven't picked a recipe yet to view!</p>
