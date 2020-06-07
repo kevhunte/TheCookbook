@@ -79,6 +79,11 @@ li>a{
 .topRecipeSubContent{
 }
 
+.recipeFormContainer{
+  margin: 0 5rem;
+  align-content: center;
+}
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -174,12 +179,12 @@ li>a{
     position: fixed;
       bottom: 3rem;
       right: 3rem;
-      padding: 8px 12px;
-      font-size: xxx-large;
+      padding: 0 12px;
+      font-size: 45px;
       color: white;
       background: #B38A0B !important;
       border: none;
-      border-radius: 50%;
+      border-radius: 25px;
   }
 }
 
@@ -212,7 +217,7 @@ li>a{
       bottom: 3rem;
       right: 3rem;
       padding: 0px 12px;
-      font-size: xxx-large;
+      font-size: 45px;
       color: white;
       background: #B38A0B !important;
       border: none;

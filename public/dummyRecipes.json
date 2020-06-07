@@ -6,12 +6,12 @@
       "name":"cereal",
       "ingredients":[
         {
-          "name":"milk",
+          "ingredientName":"milk",
           "quantity":"2 cups",
           "optional": false
         },
         {
-          "name":"corn flakes",
+          "ingredientName":"corn flakes",
           "quantity":"2 cups",
           "optional": false
         }
@@ -29,6 +29,7 @@
       ],
       "uploadedBy":"FooUser",
       "anonymous": false,
+      "photoURL":"/favicon.png",
       "uploadDate":"2020-04-30T00:05:26.097Z",
       "saves": 1,
       "ratings": {
@@ -41,17 +42,17 @@
       "name":"pb&j",
       "ingredients":[
         {
-          "name":"peanut butter",
+          "ingredientName":"peanut butter",
           "quantity":"2 tablespoons",
           "optional": false
         },
         {
-          "name":"jelly",
+          "ingredientName":"jelly",
           "quantity":"1.5 tablespoons",
           "optional": false
         },
         {
-          "name":"potato bread",
+          "ingredientName":"potato bread",
           "quantity":"2 slices",
           "optional": true
         }
@@ -69,6 +70,7 @@
       ],
       "uploadedBy":"JaneTheGreat",
       "anonymous": false,
+      "photoURL":"/favicon.ico",
       "uploadDate":"2020-03-30T00:05:26.097Z",
       "saves": 12,
       "ratings": {
@@ -81,22 +83,22 @@
       "name":"fried eggs",
       "ingredients":[
         {
-          "name":"eggs",
+          "ingredientName":"eggs",
           "quantity":"2",
           "optional": false
         },
         {
-          "name":"butter",
+          "ingredientName":"butter",
           "quantity":"2 teaspoons",
           "optional": false
         },
         {
-          "name":"black pepper",
+          "ingredientName":"black pepper",
           "quantity":"1 pinch",
           "optional": true
         },
         {
-          "name":"olive oil",
+          "ingredientName":"olive oil",
           "quantity":"1 teaspoons",
           "optional": true
         }
@@ -114,6 +116,7 @@
       ],
       "uploadedBy":"ChefKev",
       "anonymous": true,
+      "photoURL":"/logo192.png",
       "uploadDate":"2020-05-30T00:05:26.097Z",
       "saves": 3,
       "ratings": {
@@ -126,37 +129,37 @@
       "name":"french toast",
       "ingredients":[
         {
-          "name":"wheat bread",
+          "ingredientName":"wheat bread",
           "quantity":"2 slices",
           "optional": false
         },
         {
-          "name":"milk",
+          "ingredientName":"milk",
           "quantity":"3 tablespoons",
           "optional": false
         },
         {
-          "name":"eggs",
+          "ingredientName":"eggs",
           "quantity":"2",
           "optional": false
         },
         {
-          "name":"vanilla extract",
+          "ingredientName":"vanilla extract",
           "quantity":"2 teaspoons",
           "optional": false
         },
         {
-          "name":"confectioners sugar",
+          "ingredientName":"confectioners sugar",
           "quantity":"2 teaspoons",
           "optional": false
         },
         {
-          "name":"cinnamon",
+          "ingredientName":"cinnamon",
           "quantity":"1 teaspoon",
           "optional": true
         },
         {
-          "name":"nutmeg",
+          "ingredientName":"nutmeg",
           "quantity":"1 teaspoon",
           "optional": false
         }
@@ -180,6 +183,7 @@
       ],
       "uploadedBy":"JohnnyAppleseed",
       "anonymous": false,
+      "photoURL":"/logo512.png",
       "uploadDate":"2020-05-18T00:05:26.097Z",
       "saves": 7,
       "ratings": {

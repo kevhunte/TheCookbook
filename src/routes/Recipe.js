@@ -62,7 +62,7 @@ function RecipeComponent ({recipe, user}) {
           <h3 style={{fontVariant:'petite-caps'}}>Ingredients</h3>
             {recipe.ingredients.sort((a,b) => a.optional && !b.optional ? 1 : -1 ).map((i,index) =>
               <div key={index} className="ingredientContainer">
-                <p key={i.name}>{i.name}, {i.quantity} {i.optional ? '(optional)' : ''}</p>
+                <p key={i.ingredientName}>{i.ingredientName}, {i.quantity} {i.optional ? '(optional)' : ''}</p>
               </div>
             )}
         </div>
