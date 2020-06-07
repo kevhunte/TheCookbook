@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import { useAuth0 } from "../react-auth0-spa";
 
+const CHAR_LIMIT = 200;
+const CHAR_LIMIT_SHORT = 50;
+
 const NewRecipe = () => {
 
   const {user, loading} = useAuth0();
@@ -23,12 +26,16 @@ const NewRecipe = () => {
     "anonymous":false
   });
 
+  const [photoObj, setPhotoObj] = useState();
+
+  const charCount = (word) => word.length;
+
   const updateForm = (p, type, index) => {
     let val = p.target.value;
     if(type === 'name'){
       setFormData({
         ...formData,
-        "name":val
+        "name": charCount(val) <= CHAR_LIMIT_SHORT ? val : formData.name
       });
     }
     else if (type === 'anonymous') {
@@ -41,13 +48,13 @@ const NewRecipe = () => {
       if(p.target.name === 'quantity') {
         setFormData({
          ...formData,
-          "ingredients": formData.ingredients.map((i,ind) => index === ind ? {...i, "quantity":val} : i)
+          "ingredients": formData.ingredients.map((i,ind) => index === ind && charCount(val) < CHAR_LIMIT_SHORT ? {...i, "quantity":val} : i)
         });
       }
       else if(p.target.name === 'name') {
         setFormData({
          ...formData,
-          "ingredients": formData.ingredients.map((i,ind) => index === ind ? {...i, "ingredientName":val} : i)
+          "ingredients": formData.ingredients.map((i,ind) => index === ind && charCount(val) < CHAR_LIMIT_SHORT ? {...i, "ingredientName":val} : i)
         });
       }
       else if(p.target.type === 'radio') {
@@ -59,9 +66,10 @@ const NewRecipe = () => {
       }
     }
     else if (type === 'instructions') {
+      //console.log('character count:',charCount(val));
       setFormData({
         ...formData,
-        "instructions": formData.instructions.map((i,ind) => index === ind ? {"desc":val} : i)
+        "instructions": formData.instructions.map((i,ind) => index === ind && charCount(val) < CHAR_LIMIT ? {"desc":val} : i)
       });
     }
 
@@ -109,6 +117,8 @@ const NewRecipe = () => {
   }
 
   const handleSubmit = (payload) => {
+    // make sure first ingredient and instruction aren't empty and over a certain length
+
     // upload pic to bucket first
     // if fails, inform user. Ask to try with pic again or to try without if fails again
     // put a spinner until 202 comes back
@@ -129,7 +139,12 @@ const NewRecipe = () => {
         <form id="newRecipeForm" onSubmit={(event) => event.preventDefault()}>
           <label>
           Name:&nbsp;
-            <input type="text" placeholder="Johnny's Applesauce" value={formData.name} onChange={(n) => updateForm(n,'name')} autoComplete="off"/>
+            <input type="text" placeholder="Johnny's Applesauce" value={formData.name} onChange={(n) => updateForm(n,'name')} autoFocus="on" autoComplete="off"/>
+          </label>
+          <br/>
+          <label>
+          Upload a photo:&nbsp;
+          <input id="photoObj" type="file" name="photo" value={photoObj} accept="image/*"/>
           </label>
           <br/>
           <label>
