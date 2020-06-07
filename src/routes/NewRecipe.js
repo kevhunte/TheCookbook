@@ -24,7 +24,6 @@ const NewRecipe = () => {
   });
 
   const updateForm = (p, type, index) => {
-    //console.log(p.target);
     let val = p.target.value;
     if(type === 'name'){
       setFormData({
@@ -35,7 +34,7 @@ const NewRecipe = () => {
     else if (type === 'anonymous') {
       setFormData({
         ...formData,
-        "anonymous":val
+        "anonymous":val === 'true'
       });
     }
     else if (type === 'ingredients') {
@@ -51,19 +50,18 @@ const NewRecipe = () => {
           "ingredients": formData.ingredients.map((i,ind) => index === ind ? {...i, "ingredientName":val} : i)
         });
       }
-      else if(p.target.name === 'isOptional') {
-        console.log('val gotten:',val, val === 'true');
+      else if(p.target.type === 'radio') {
+        //console.log('val gotten:',val, val === 'true');
         setFormData({
          ...formData,
           "ingredients": formData.ingredients.map((i,ind) => index === ind ? {...i, "optional": val === 'true'} : i)
         });
-        console.log(...formData.ingredients);
       }
     }
     else if (type === 'instructions') {
       setFormData({
         ...formData,
-        "instructions": formData.instructions.map((i,ind) => index === ind ? val : i)
+        "instructions": formData.instructions.map((i,ind) => index === ind ? {"desc":val} : i)
       });
     }
 
@@ -88,6 +86,25 @@ const NewRecipe = () => {
           "desc":""
         }]
       })
+    }
+  }
+
+  const deleteEntry = (type, index) => {
+    if (type === 'ingredient'){
+      let newList = formData.ingredients.filter((i, ind) => ind !== index);
+      //console.log(...newList);
+      setFormData({
+        ...formData,
+        "ingredients":newList
+      });
+    }
+    else if (type === 'instruction'){
+      let newList = formData.instructions.filter((i, ind) => ind !== index);
+      //console.log(...newList);
+      setFormData({
+        ...formData,
+        "instructions": newList
+      });
     }
   }
 
@@ -121,21 +138,22 @@ const NewRecipe = () => {
             <div key={index}>
               <label>
               Name of Ingredient:&nbsp;
-                <input key={i.name} name="name" type="text" placeholder="Cream Cheese" value={i.name} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'a'} name="name" type="text" placeholder="Cream Cheese" value={i.ingredientName} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
               </label>
               <br/>
               <label>
               Measurement:&nbsp;
-                <input key={i.value} name="quantity" type="text" placeholder="2 cups" value={i.value} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'b'} name="quantity" type="text" placeholder="2 cups" value={i.quantity} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
               </label>
               <br/>
               <label>
               Is this ingredient optional?&nbsp;
               Yes
-              <input key={i.optional} type="radio" name="isOptional" value="true" onChange={(n) => updateForm(n,'ingredients', index)}/>
+              <input key={'r'+index} type="radio" name={"isOptional"+index} value="true" onChange={(n) => updateForm(n,'ingredients', index)}/>
               No
-              <input key={!i.optional} type="radio" name="isOptional" value="false" onChange={(n) => updateForm(n,'ingredients', index)}/>
+              <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" onChange={(n) => updateForm(n,'ingredients', index)}/>
               </label>
+              <button key={'k'+index} onClick={() => deleteEntry('ingredient',index)} style={{display: formData.ingredients.length > 1 ? undefined : 'none'}}>Delete Ingredient</button>
             </div>
           )}
           <button onClick={() => addEntry('ingredient')}>Add Another Ingredient</button>
@@ -144,14 +162,21 @@ const NewRecipe = () => {
           <label>
           Instructions:<br/>
           {formData.instructions.map((i, index) =>
-              <textarea key={index} placeholder="Bake at 350&deg;F for 30 minutes" value={i.desc} onChange={(n) => updateForm(n,'instructions', index)} autoComplete="off"/>
+            <div key={index}>
+              <textarea key={index^2+1} placeholder="Bake at 350&deg;F for 30 minutes" value={i.desc} onChange={(n) => updateForm(n,'instructions', index)} autoComplete="off"/>
+              <button key={index^2+2} onClick={() => deleteEntry('instruction',index)} style={{display: formData.instructions.length > 1 ? undefined : 'none'}}>Delete Step</button>
+            </div>
           )}
           <button onClick={() => addEntry('instruction')}>Add Another Instruction</button>
           </label>
-
+          <br/>
+          <label>
+            Upload Anonymously?&nbsp;
+            Yes
             <input type="radio" name="isAnonymous" value="true" onChange={(n) => updateForm(n,'anonymous')}/>
+            No
             <input type="radio" name="isAnonymous" value="false" onChange={(n) => updateForm(n,'anonymous')}/>
-
+          </label>
 
         </form>
       </div>
