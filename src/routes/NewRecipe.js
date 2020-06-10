@@ -27,6 +27,7 @@ const NewRecipe = () => {
   });
 
   const [photoFeedBack, setPhotoFeedback] = useState("");
+  let imageObj = null;
 
   const charCount = (word) => word.length;
 
@@ -120,13 +121,18 @@ const NewRecipe = () => {
     //const image = e.target.files[0];
     if(image){
       const sizeInKB = Math.ceil(image.size / 1024);
-      console.log('Got image:',image, sizeInKB);
+      //console.log('Got image:',image, sizeInKB);
       if (sizeInKB <= 2000){
         // under 2mb
         setPhotoFeedback("Good!");
+        imageObj = image;
+        console.log(imageObj);
+        return true;
       }
       else {
         setPhotoFeedback("Please upload a picture under 2MB");
+        imageObj = null;
+        return false;
       }
     }
   }
@@ -134,19 +140,19 @@ const NewRecipe = () => {
   const handleSubmit = () => {
     // make sure first ingredient and instruction aren't empty and over a certain length
     // cycle through formData and verify values in keys
-
-    // upload pic to bucket first
+    //
+    // upload pic to bucket first. Pull from imageObj
     // if fails, inform user. Ask to try with pic again or to try without if fails again
     // put a spinner until 202 comes back
   }
 
-  if(loading || !user){
-    return (
-      <div id="newRecipe" className="newRecipe page animated">
-        <UnauthComp/>
-      </div>
-    );
-  }
+  // if(loading || !user){
+  //   return (
+  //     <div id="newRecipe" className="newRecipe page animated">
+  //       <UnauthComp/>
+  //     </div>
+  //   );
+  // }
   return (
     <div id="newRecipe" className="newRecipe page animated">
       <h2>Let's eat!</h2>

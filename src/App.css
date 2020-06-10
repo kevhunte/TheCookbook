@@ -59,6 +59,7 @@ li>a{
 .page{
   padding: 0 2rem;
   padding-top: 50px;
+  min-height: 600px;
 }
 
 .topRecipe{
