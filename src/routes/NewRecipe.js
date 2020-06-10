@@ -26,7 +26,7 @@ const NewRecipe = () => {
     "anonymous":false
   });
 
-  const [photoObj, setPhotoObj] = useState();
+  const [photoFeedBack, setPhotoFeedback] = useState("");
 
   const charCount = (word) => word.length;
 
@@ -116,82 +116,118 @@ const NewRecipe = () => {
     }
   }
 
-  const handleSubmit = (payload) => {
+  const checkImage = (image) => {
+    //const image = e.target.files[0];
+    if(image){
+      const sizeInKB = Math.ceil(image.size / 1024);
+      console.log('Got image:',image, sizeInKB);
+      if (sizeInKB <= 2000){
+        // under 2mb
+        setPhotoFeedback("Good!");
+      }
+      else {
+        setPhotoFeedback("Please upload a picture under 2MB");
+      }
+    }
+  }
+
+  const handleSubmit = () => {
     // make sure first ingredient and instruction aren't empty and over a certain length
+    // cycle through formData and verify values in keys
 
     // upload pic to bucket first
     // if fails, inform user. Ask to try with pic again or to try without if fails again
     // put a spinner until 202 comes back
   }
 
-  // if(loading || !user){
-  //   return (
-  //     <div id="newRecipe" className="newRecipe page animated">
-  //       <UnauthComp/>
-  //     </div>
-  //   );
-  // }
+  if(loading || !user){
+    return (
+      <div id="newRecipe" className="newRecipe page animated">
+        <UnauthComp/>
+      </div>
+    );
+  }
   return (
     <div id="newRecipe" className="newRecipe page animated">
       <h2>Let's eat!</h2>
-      <p>This page holds the form for users to upload new recipes</p>
+      <p>Upload an amazing recipe for the world to see</p>
       <div className="recipeFormContainer">
-        <form id="newRecipeForm" onSubmit={(event) => event.preventDefault()}>
-          <label>
-          Name:&nbsp;
-            <input type="text" placeholder="Johnny's Applesauce" value={formData.name} onChange={(n) => updateForm(n,'name')} autoFocus="on" autoComplete="off"/>
+        <form id="newRecipeForm" onSubmit={(event) => event.preventDefault()} style={{margin:'0 0 2rem 0'}}>
+
+          <label style={{margin:'0.15rem 0'}}>
+          <h4>Name:</h4>
+            <input type="text" placeholder="Recipe Name" value={formData.name} onChange={(n) => updateForm(n,'name')} autoFocus="on" autoComplete="off"/>
           </label>
-          <br/>
-          <label>
+          <div style={{margin:'1rem 0'}}>
           Upload a photo:&nbsp;
-          <input id="photoObj" type="file" name="photo" value={photoObj} accept="image/*"/>
-          </label>
-          <br/>
-          <label>
-          Ingredients:<br/>
+          <input id="photoObj" type="file" name="photo" accept="image/*" onChange={(e) => checkImage(e.target.files[0])}/>
+          {photoFeedBack}
+          </div>
+
+          <div style={{margin:'1rem 0'}}>
+          <h4>Ingredients:</h4>
           {formData.ingredients.map((i, index) =>
-            <div key={index}>
-              <label>
+            <div key={index} style={{margin:'1rem 0'}}>
+              <label style={{margin:'0.15rem 0'}}>
               Name of Ingredient:&nbsp;
-                <input key={index+'a'} name="name" type="text" placeholder="Cream Cheese" value={i.ingredientName} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'a'} name="name" type="text" placeholder="Ingredient name" value={i.ingredientName} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
               </label>
-              <br/>
-              <label>
+              <label style={{margin:'0.15rem 0'}}>
               Measurement:&nbsp;
-                <input key={index+'b'} name="quantity" type="text" placeholder="2 cups" value={i.quantity} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'b'} name="quantity" type="text" placeholder="Quantity ex. two cups" value={i.quantity} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
               </label>
-              <br/>
-              <label>
+              <label style={{margin:'0.15rem 0'}}>
               Is this ingredient optional?&nbsp;
               Yes
               <input key={'r'+index} type="radio" name={"isOptional"+index} value="true" onChange={(n) => updateForm(n,'ingredients', index)}/>
               No
               <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" onChange={(n) => updateForm(n,'ingredients', index)}/>
               </label>
-              <button key={'k'+index} onClick={() => deleteEntry('ingredient',index)} style={{display: formData.ingredients.length > 1 ? undefined : 'none'}}>Delete Ingredient</button>
+              <button key={'k'+index} onClick={() => deleteEntry('ingredient',index)}
+              style={{
+                display: formData.ingredients.length > 1 ? undefined : 'none',
+                color:'white', background:'red', padding:'0.5rem 1rem',
+                border:'none', borderRadius:'15px', fontWeight:'600', margin:'0 1rem'}}>Delete
+              </button>
             </div>
           )}
-          <button onClick={() => addEntry('ingredient')}>Add Another Ingredient</button>
-          </label>
-          <br/>
-          <label>
-          Instructions:<br/>
+          <button onClick={() => addEntry('ingredient')}
+          style={{
+            color:'white', background:'#5ACF3D', padding:'0.5rem 1rem',
+            border:'none', borderRadius:'15px', fontWeight:'600', margin:'0 1rem'}}
+          >Add Another Ingredient</button>
+          </div>
+
+          <div style={{margin:'1rem 0'}}>
+          <h4>Instructions:</h4>
           {formData.instructions.map((i, index) =>
-            <div key={index}>
+            <div key={index} style={{margin:'1rem 0'}}>
               <textarea key={index^2+1} placeholder="Bake at 350&deg;F for 30 minutes" value={i.desc} onChange={(n) => updateForm(n,'instructions', index)} autoComplete="off"/>
-              <button key={index^2+2} onClick={() => deleteEntry('instruction',index)} style={{display: formData.instructions.length > 1 ? undefined : 'none'}}>Delete Step</button>
+              <button key={index^2+2} onClick={() => deleteEntry('instruction',index)}
+              style={{display: formData.instructions.length > 1 ? undefined : 'none',
+              color:'white', background:'red', padding:'0.5rem 1rem',
+              border:'none', borderRadius:'15px', fontWeight:'600', margin:'0 1rem'}}>Delete
+              </button>
             </div>
           )}
-          <button onClick={() => addEntry('instruction')}>Add Another Instruction</button>
-          </label>
-          <br/>
-          <label>
+          <button onClick={() => addEntry('instruction')}
+          style={{
+            color:'white', background:'#5ACF3D', padding:'0.5rem 1rem',
+            border:'none', borderRadius:'15px', fontWeight:'600', margin:'0 1rem'}}
+          >Add Another Instruction</button>
+          </div>
+
+          <div style={{margin:'1rem 0'}}>
+          <label style={{margin:'0.15rem 0'}}>
             Upload Anonymously?&nbsp;
             Yes
             <input type="radio" name="isAnonymous" value="true" onChange={(n) => updateForm(n,'anonymous')}/>
             No
             <input type="radio" name="isAnonymous" value="false" onChange={(n) => updateForm(n,'anonymous')}/>
           </label>
+          </div>
+
+          <button>Create</button>
 
         </form>
       </div>
