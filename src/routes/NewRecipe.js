@@ -8,7 +8,8 @@ const NewRecipe = () => {
 
   const {user, loading} = useAuth0();
 
-const schema = {
+  //schema
+  const schema = {
   "name":"",
   "ingredients":[
     {
@@ -24,7 +25,7 @@ const schema = {
   ],
   "anonymous":false
 }
-//schema
+
   const [formData, setFormData] = useState(schema);
 
   const [photoFeedBack, setPhotoFeedback] = useState("");
@@ -138,9 +139,49 @@ const schema = {
     }
   }
 
+  const checkStringInput = (input) => {
+    // strip out non chars / non-significant input
+    if (input) {
+      let processed = input.replace(/[^a-zA-Z0-9\d]+/g, '');
+      //console.log('original:',input,'processed:', processed);
+
+      return processed.length >= 5;
+    }
+    return false;
+  }
+
   const handleSubmit = () => {
     // make sure first ingredient and instruction aren't empty and over a certain length
+    // regex to replace non chars. Then check if length equal to or greater than 5
     // cycle through formData and verify values in keys
+    for (const ing of formData.ingredients) {
+      let name = ing.ingredientName
+      let quant = ing.quantity
+
+      if (checkStringInput(name) && checkStringInput(quant)) {
+        continue;
+      }
+      else {
+        //invalid input, tell user to fix it
+        console.log('invalid ingredient sent');
+        return;
+      }
+    }
+
+
+    for (const ins of formData.instructions) {
+      let desc = ins.desc
+
+      if (checkStringInput(desc)) {
+        continue;
+      }
+      else {
+        //invalid input, tell user to fix it
+        console.log('invalid instruction sent');
+        return;
+      }
+    }
+
     //
     // upload pic to bucket first. Pull from imageObj
     // if fails, inform user. Ask to try with pic again or to try without if fails again
@@ -187,9 +228,9 @@ const schema = {
               <label style={{margin:'0.15rem 0'}}>
               Is this ingredient optional?&nbsp;
               Yes
-              <input key={'r'+index} type="radio" name={"isOptional"+index} value="true" onChange={(n) => updateForm(n,'ingredients', index)}/>
+              <input key={'r'+index} type="radio" name={"isOptional"+index} value="true" checked={i.optional} onChange={(n) => updateForm(n,'ingredients', index)}/>
               No
-              <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" checked onChange={(n) => updateForm(n,'ingredients', index)}/>
+              <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" checked={!i.optional} onChange={(n) => updateForm(n,'ingredients', index)}/>
               </label>
               <button key={'k'+index} onClick={() => deleteEntry('ingredient',index)}
               style={{
@@ -235,7 +276,7 @@ const schema = {
           </label>
           </div>
 
-          <button>Create</button>
+          <button onClick={() => handleSubmit()} >Create</button>
 
         </form>
       </div>
