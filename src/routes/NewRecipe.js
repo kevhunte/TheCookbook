@@ -8,23 +8,24 @@ const NewRecipe = () => {
 
   const {user, loading} = useAuth0();
 
+const schema = {
+  "name":"",
+  "ingredients":[
+    {
+      "ingredientName":"",
+      "quantity": "",
+      "optional": false
+    }
+  ],
+  "instructions":[
+    {
+      "desc":""
+    }
+  ],
+  "anonymous":false
+}
 //schema
-  const [formData, setFormData] = useState({
-    "name":"",
-    "ingredients":[
-      {
-        "ingredientName":"",
-        "quantity": "",
-        "optional": false
-      }
-    ],
-    "instructions":[
-      {
-        "desc":""
-      }
-    ],
-    "anonymous":false
-  });
+  const [formData, setFormData] = useState(schema);
 
   const [photoFeedBack, setPhotoFeedback] = useState("");
   let imageObj = null;
@@ -120,13 +121,13 @@ const NewRecipe = () => {
   const checkImage = (image) => {
     //const image = e.target.files[0];
     if(image){
-      const sizeInKB = Math.ceil(image.size / 1024);
+      const sizeInMB = (image.size / 1024 / 1024).toFixed(2);
       //console.log('Got image:',image, sizeInKB);
-      if (sizeInKB <= 2000){
+      if (sizeInMB <= 2){
         // under 2mb
         setPhotoFeedback("Good!");
         imageObj = image;
-        console.log(imageObj);
+        //console.log(imageObj);
         return true;
       }
       else {
@@ -147,6 +148,7 @@ const NewRecipe = () => {
   }
 
   // if(loading || !user){
+          /*Security*/
   //   return (
   //     <div id="newRecipe" className="newRecipe page animated">
   //       <UnauthComp/>
@@ -162,7 +164,7 @@ const NewRecipe = () => {
 
           <label style={{margin:'0.15rem 0'}}>
           <h4>Name:</h4>
-            <input type="text" placeholder="Recipe Name" value={formData.name} onChange={(n) => updateForm(n,'name')} autoFocus="on" autoComplete="off"/>
+            <input type="text" placeholder="Recipe Name" value={formData.name} onChange={(n) => updateForm(n,'name')} required autoFocus="on" autoComplete="off"/>
           </label>
           <div style={{margin:'1rem 0'}}>
           Upload a photo:&nbsp;
@@ -176,18 +178,18 @@ const NewRecipe = () => {
             <div key={index} style={{margin:'1rem 0'}}>
               <label style={{margin:'0.15rem 0'}}>
               Name of Ingredient:&nbsp;
-                <input key={index+'a'} name="name" type="text" placeholder="Ingredient name" value={i.ingredientName} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'a'} name="name" type="text" placeholder="Ingredient name" value={i.ingredientName} onChange={(n) => updateForm(n,'ingredients', index)} required={!i.optional || formData.ingredients.length === 1} autoComplete="off"/>
               </label>
               <label style={{margin:'0.15rem 0'}}>
               Measurement:&nbsp;
-                <input key={index+'b'} name="quantity" type="text" placeholder="Quantity ex. two cups" value={i.quantity} onChange={(n) => updateForm(n,'ingredients', index)} autoComplete="off"/>
+                <input key={index+'b'} name="quantity" type="text" placeholder="Quantity ex. two cups" value={i.quantity} onChange={(n) => updateForm(n,'ingredients', index)} required={!i.optional || formData.ingredients.length === 1} autoComplete="off"/>
               </label>
               <label style={{margin:'0.15rem 0'}}>
               Is this ingredient optional?&nbsp;
               Yes
               <input key={'r'+index} type="radio" name={"isOptional"+index} value="true" onChange={(n) => updateForm(n,'ingredients', index)}/>
               No
-              <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" onChange={(n) => updateForm(n,'ingredients', index)}/>
+              <input key={'j'+index} type="radio" name={"isOptional"+index} value="false" checked onChange={(n) => updateForm(n,'ingredients', index)}/>
               </label>
               <button key={'k'+index} onClick={() => deleteEntry('ingredient',index)}
               style={{
@@ -208,7 +210,7 @@ const NewRecipe = () => {
           <h4>Instructions:</h4>
           {formData.instructions.map((i, index) =>
             <div key={index} style={{margin:'1rem 0'}}>
-              <textarea key={index^2+1} placeholder="Bake at 350&deg;F for 30 minutes" value={i.desc} onChange={(n) => updateForm(n,'instructions', index)} autoComplete="off"/>
+              <textarea key={index^2+1} placeholder="Bake at 350&deg;F for 30 minutes" value={i.desc} onChange={(n) => updateForm(n,'instructions', index)} required={index === 0 || formData.instructions.length === 1} autoComplete="off"/>
               <button key={index^2+2} onClick={() => deleteEntry('instruction',index)}
               style={{display: formData.instructions.length > 1 ? undefined : 'none',
               color:'white', background:'red', padding:'0.5rem 1rem',
@@ -229,7 +231,7 @@ const NewRecipe = () => {
             Yes
             <input type="radio" name="isAnonymous" value="true" onChange={(n) => updateForm(n,'anonymous')}/>
             No
-            <input type="radio" name="isAnonymous" value="false" onChange={(n) => updateForm(n,'anonymous')}/>
+            <input type="radio" name="isAnonymous" value="false" checked onChange={(n) => updateForm(n,'anonymous')}/>
           </label>
           </div>
 

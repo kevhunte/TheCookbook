@@ -2,10 +2,6 @@ import React, {useState, useEffect, useContext, Suspense} from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { useAuth0 } from "./react-auth0-spa";
 import history from "./utils/history";
-// import Home from './routes/Home'
-// import Search from './routes/SearchRecipes';
-// import Profile from './routes/Profile';
-// import Recipe from './routes/Recipe';
 import NotFoundPage from './routes/ErrorPage';
 import NavBar from './components/navbar';
 import './App.css';
